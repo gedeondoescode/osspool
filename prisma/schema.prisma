@@ -12,10 +12,10 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  email     String?  @unique
+  email     String   @unique
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
-  name      String?
+  name      String
   posts     Post[]
 }
 
