@@ -1,6 +1,6 @@
 # Open Source Pool
 
-Post your ideas for the next biggest startup
+Post your trillion dollar start up ideas here.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
