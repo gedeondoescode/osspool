@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 const userData = [
 	{
 		name: "Alice",
+		username: "AliceFromPrisma",
 		email: "alice@prisma.io",
 		posts: {
 			create: [
@@ -18,6 +19,7 @@ const userData = [
 		},
 	},
 	{
+		username: "NiluIsCool127",
 		name: "Nilu",
 		email: "nilu@prisma.io",
 		posts: {
@@ -32,6 +34,7 @@ const userData = [
 		},
 	},
 	{
+		username: "MahmoudTheGod",
 		name: "Mahmoud",
 		email: "mahmoud@prisma.io",
 		posts: {
