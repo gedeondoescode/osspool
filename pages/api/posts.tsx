@@ -16,14 +16,10 @@ export async function createPost(req, res) {
 	if (req.metHod === "POST") {
 		const result = await prisma.post.upsert({
 			create: {
-				data: {
-					...req.body,
-				},
+				...req.body,
 			},
 			update: {
-				data: {
-					...req.body,
-				},
+				...req.body,
 			},
 			where: { id: Number(id) },
 		});
@@ -38,6 +34,6 @@ export async function deletePost(req, res) {
 		const result = await prisma.post.delete({
 			where: { id: Number(id) },
 		});
-		res.json({ message: "Post has been deleted" });
+		res.json({ message: "Post has been deleted" }, result);
 	}
 }

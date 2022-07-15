@@ -1,20 +1,17 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 
 // CREATE or UPDATE /user/:id
-export async function upsertUser(req, res) {
+export async function upsertUser(req: NextApiRequest, res: NextApiResponse) {
 	const { id } = req.query;
 
 	if (req.method === "POST") {
 		const result = await prisma.user.upsert({
 			create: {
-				data: {
-					...req.body,
-				},
+				...req.body,
 			},
 			update: {
-				data: {
-					...req.body,
-				},
+				...req.body,
 			},
 			where: { id: Number(id) },
 		});
