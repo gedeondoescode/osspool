@@ -1,7 +1,7 @@
 import prisma from "../../lib/prisma";
 
 // CREATE or UPDATE /user/:id
-export async function upsert(req, res) {
+export async function upsertUser(req, res) {
 	const { id } = req.query;
 
 	if (req.method === "POST") {
