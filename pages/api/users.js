@@ -1,22 +1,48 @@
 import prisma from "../../lib/prisma";
 
-export async function create(req, res) {
+// CREATE or UPDATE /user/:id
+export async function upsert(req, res) {
+	const { id } = req.query;
+
 	if (req.method === "POST") {
-		const result = await prisma.user.create({
-			data: {
-				...req.body,
+		const result = await prisma.user.upsert({
+			create: {
+				data: {
+					...req.body,
+				},
+			},
+			update: {
+				data: {
+					...req.body,
+				},
+			},
+			where: { id: Number(id) },
+		});
+		return res.json(result);
+	}
+}
+// GET /user/:id
+export async function getUser(req, res) {
+	const { id } = req.query;
+
+	if (req.method === "GET") {
+		const result = await prisma.user.findUnique({
+			where: {
+				id: Number(id),
 			},
 		});
 		return res.json(result);
 	}
 }
 
-export async function getUser(req, res) {
-	const { username } = req.query;
-	if (req.method === "GET") {
-		const result = await prisma.user.findUnique({
+// DELETE /user/:id
+export async function deleteUser(req, res) {
+	const { id } = req.query;
+
+	if (req.method === "DELETE") {
+		const result = await prisma.user.delete({
 			where: {
-				username: String(username),
+				id: Number(id),
 			},
 		});
 		return res.json(result);
