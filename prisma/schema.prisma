@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  profile    Profile?
+  posts      Post[]
+  comments   Comment[]
+  isverified Boolean   @default(false)
+
+  DateCreated DateTime @default(now())
+  DateUpdated DateTime @updatedAt
+}
+
+model Profile {
+  id       Int     @id @default(autoincrement())
+  nickname String?
+  bio      String?
+  username String  @unique
+  user     User    @relation(fields: [userId], references: [id])
+  userId   Int     @unique
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(100)
+  content     String
+  isPublished Boolean   @default(false)
+  vote        Vote[]
+  comments    Comment[]
+  author      User?     @relation(fields: [authorId], references: [id])
+  authorId    Int?
+}
+
+model Comment {
+  id        Int    @id @default(autoincrement())
+  content   String
+  vote      Vote[]
+  Profile   User?  @relation(fields: [profileId], references: [id])
+  profileId Int?
+  Post      Post?  @relation(fields: [postId], references: [id])
+  postId    Int?
+}
+
+enum VoteType {
+  upvote
+  downvote
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  Post      Post?    @relation(fields: [postId], references: [id])
+  postId    Int?
+  Comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId Int?
+  voteType  VoteType
+}
