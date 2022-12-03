@@ -20,6 +20,7 @@ model User {
 
   DateCreated DateTime @default(now())
   DateUpdated DateTime @updatedAt
+  Vote        Vote[]
 }
 
 model Profile {
@@ -53,15 +54,17 @@ model Comment {
 }
 
 enum VoteType {
-  upvote
-  downvote
+  like
+  dislike
 }
 
 model Vote {
   id        Int      @id @default(autoincrement())
+  voteType  VoteType
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
   Post      Post?    @relation(fields: [postId], references: [id])
   postId    Int?
   Comment   Comment? @relation(fields: [commentId], references: [id])
   commentId Int?
-  voteType  VoteType
 }
