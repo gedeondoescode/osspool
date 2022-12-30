@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
@@ -41,6 +42,8 @@ model Post {
   comments    Comment[]
   author      User?     @relation(fields: [authorId], references: [id])
   authorId    Int?
+
+  @@index([authorId])
 }
 
 model Comment {
@@ -51,6 +54,9 @@ model Comment {
   profileId Int?
   Post      Post?  @relation(fields: [postId], references: [id])
   postId    Int?
+
+  @@index([profileId])
+  @@index([postId])
 }
 
 enum VoteType {
@@ -67,4 +73,8 @@ model Vote {
   postId    Int?
   Comment   Comment? @relation(fields: [commentId], references: [id])
   commentId Int?
+
+  @@index([authorId])
+  @@index([postId])
+  @@index([commentId])
 }
