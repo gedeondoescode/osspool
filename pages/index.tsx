@@ -1,8 +1,12 @@
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 const Home: NextPage = () => {
+	const session = useSession();
+
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-center py-2">
 			<Head>
@@ -65,6 +69,21 @@ const Home: NextPage = () => {
 							Instantly deploy your Next.js site to a public URL with Vercel.
 						</p>
 					</a>
+				</div>
+
+				<div>
+					{session.status === "authenticated" && (
+						<>
+							<code>You&apos;re signed in as: {session.data.user?.email}</code>
+							<Link href="/api/auth/signout">Sign Out</Link>
+						</>
+					)}
+
+					{session.status === "unauthenticated" && (
+						<>
+							<Link href="/api/auth/signin">Sign in</Link>
+						</>
+					)}
 				</div>
 			</main>
 
