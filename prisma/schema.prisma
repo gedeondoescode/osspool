@@ -78,7 +78,7 @@ model Post {
   id          String    @id @default(cuid())
   title       String    @db.VarChar(100)
   content     String
-  isPublished Boolean
+  isPublished Boolean   @default(false)
   vote        Vote[]
   comments    Comment[]
   author      User?     @relation(fields: [authorId], references: [id])
