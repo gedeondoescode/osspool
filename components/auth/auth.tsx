@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import { FC, useState } from "react";
-import AuthLayout from "./AuthLayout";
+import Layout from "../Layout";
 
 type AuthProps = {
 	onMagicLinkLogin: (email: string) => void;
@@ -31,7 +31,7 @@ export const Auth: FC<AuthProps> = ({
 
 	return (
 		<>
-			<AuthLayout minH="100vh" px="6">
+			<Layout minH="100vh" px="6">
 				<VStack>
 					<Heading>Welcome to OSSPool!</Heading>
 					<Box maxW="md">
@@ -73,7 +73,7 @@ export const Auth: FC<AuthProps> = ({
 						</Box>
 					</Box>
 				</VStack>
-			</AuthLayout>
+			</Layout>
 		</>
 	);
 };
