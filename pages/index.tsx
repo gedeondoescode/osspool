@@ -1,5 +1,6 @@
+import { Button } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -75,7 +76,9 @@ const Home: NextPage = () => {
 					{session.status === "authenticated" && (
 						<>
 							<code>You&apos;re signed in as: {session.data.user?.email}</code>
-							<Link href="/api/auth/signout">Sign Out</Link>
+							<Button onClick={() => signOut({ callbackUrl: "/auth/signout" })}>
+								Sign out
+							</Button>
 						</>
 					)}
 

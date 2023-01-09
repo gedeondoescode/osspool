@@ -21,10 +21,10 @@ export const authOptions: NextAuthOptions = {
 			},
 			from: process.env.EMAIL_FROM,
 		}),
-		// GoogleProvider({
-		// 	clientId: process.env.GOOGLE_ID as string,
-		// 	clientSecret: process.env.GOOGLE_SECRET as string,
-		// }),
+		GoogleProvider({
+			clientId: process.env.GOOGLE_ID as string,
+			clientSecret: process.env.GOOGLE_SECRET as string,
+		}),
 		GithubProvider({
 			clientId: process.env.GITHUB_ID as string,
 			clientSecret: process.env.GITHUB_SECRET as string,
@@ -32,7 +32,8 @@ export const authOptions: NextAuthOptions = {
 	],
 	pages: {
 		signIn: "/auth/signin",
-		// 	signOut: "/auth/signout",
+		signOut: "/auth/signout",
+		verifyRequest: "/auth/verify-request", // (used for check email message)
 		// 	error: "/auth/error", // Error code passed in query string as ?error=
 		// 	newUser: "/auth/onboarding", // New users will be directed here on first sign in (leave the property out if not of interest)
 	},
