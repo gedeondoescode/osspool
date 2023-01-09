@@ -3,8 +3,6 @@ import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
-import SignIn from "./auth/signin";
 
 const Home: NextPage = () => {
 	const session = useSession();
