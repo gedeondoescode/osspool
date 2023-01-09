@@ -1,9 +1,10 @@
-import { Button } from "@chakra-ui/react";
+import { Button, LinkOverlay } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import SignIn from "./auth/signin";
 
 const Home: NextPage = () => {
 	const session = useSession();
@@ -84,7 +85,9 @@ const Home: NextPage = () => {
 
 					{session.status === "unauthenticated" && (
 						<>
-							<Link href="/api/auth/signin">Sign in</Link>
+							<Button>
+								<LinkOverlay href="/auth/signin">Sign in</LinkOverlay>
+							</Button>
 						</>
 					)}
 				</div>

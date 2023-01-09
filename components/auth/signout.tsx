@@ -12,7 +12,7 @@ export const SignOut: React.FC = () => {
 						You have successfully signed out!
 					</Text>
 					<Button width="100%">
-						<LinkOverlay href="http://localhost:3000/auth/signin">
+						<LinkOverlay href="/auth/signin">
 							Return to sign-in page
 						</LinkOverlay>
 					</Button>
