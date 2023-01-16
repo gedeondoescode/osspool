@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import prisma from "../../../lib/prisma";
@@ -11,25 +12,33 @@ export default async function handler(
 	const session = await unstable_getServerSession(req, res, authOptions);
 
 	if (req.method === "GET") {
-		const result = await prisma.user.findUnique({
-			where: { username: String(username) },
-			select: {
-				name: true,
-				username: true,
-				bio: true,
-				posts: {
-					select: {
-						title: true,
-						_count: {
-							select: {
-								comments: true,
-								favorites: true,
+		try {
+			const result = await prisma.user.findUniqueOrThrow({
+				where: { username: String(username) },
+				select: {
+					name: true,
+					username: true,
+					bio: true,
+					posts: {
+						select: {
+							title: true,
+							_count: {
+								select: {
+									comments: true,
+									favorites: true,
+								},
 							},
 						},
 					},
 				},
-			},
-		});
-		res.json(result);
+			});
+			res.json(result);
+		} catch (e) {
+			if (e instanceof Prisma.PrismaClientKnownRequestError) {
+				if (e.code === "P2025") {
+					res.json({ message: "Query cannot be found!" });
+				}
+			}
+		}
 	}
 }
