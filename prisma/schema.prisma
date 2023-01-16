@@ -45,17 +45,18 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String    @unique
-  emailVerified DateTime?
+  emailVerified Boolean   @default(false)
   image         String?
-  profile       Profile?
+  bio           String?
+  username      String    @unique
   posts         Post[]
   comments      Comment[]
 
-  DateCreated DateTime  @default(now())
-  DateUpdated DateTime  @updatedAt
+  DateCreated DateTime   @default(now())
+  DateUpdated DateTime   @updatedAt
   accounts    Account[]
   sessions    Session[]
-  Vote        Vote[]
+  favorites   Favorite[]
 }
 
 model VerificationToken {
@@ -66,48 +67,34 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Profile {
-  id       String  @id @default(cuid())
-  bio      String?
-  username String  @unique
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String  @unique
-}
-
 model Post {
-  id          String    @id @default(cuid())
-  title       String    @db.VarChar(100)
+  id          String     @id @default(cuid())
+  title       String     @db.VarChar(100)
   content     String
-  isPublished Boolean   @default(false)
-  vote        Vote[]
+  isPublished Boolean    @default(false)
+  favorites   Favorite[]
   comments    Comment[]
-  author      User?     @relation(fields: [authorId], references: [id])
+  author      User?      @relation(fields: [authorId], references: [id])
   authorId    String?
 
   @@index([authorId])
 }
 
 model Comment {
-  id        String  @id @default(cuid())
+  id        String     @id @default(cuid())
   content   String
-  vote      Vote[]
-  Profile   User?   @relation(fields: [profileId], references: [id])
+  favorites Favorite[]
+  Profile   User?      @relation(fields: [profileId], references: [id])
   profileId String?
-  Post      Post?   @relation(fields: [postId], references: [id])
+  Post      Post?      @relation(fields: [postId], references: [id])
   postId    String?
 
   @@index([profileId])
   @@index([postId])
 }
 
-enum VoteType {
-  like
-  dislike
-}
-
-model Vote {
+model Favorite {
   id        String   @id @default(cuid())
-  voteType  VoteType
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
   Post      Post?    @relation(fields: [postId], references: [id])
